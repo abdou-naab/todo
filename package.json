@@ -1,0 +1,30 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "simple todo app with vanilla js ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npx webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdou-naab/todo.git"
+  },
+  "keywords": [
+    "webpack",
+    "js",
+    "todo"
+  ],
+  "author": "abderrahmane naab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdou-naab/todo/issues"
+  },
+  "homepage": "https://github.com/abdou-naab/todo#readme",
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
