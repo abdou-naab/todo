@@ -87,3 +87,15 @@ export function createTodoItem(i) {
   todoItem.append(state, title, details, date, edit, remove);
   return todoItem;
 }
+
+export class TodoItem {
+  constructor(section, title, state, details, dueDate, priority, finished) {
+    this.section = section;
+    this.title = title;
+    this.state = state;
+    this.details = details;
+    this.dueDate = dueDate;
+    this.priority = priority;
+    this.finished = finished;
+  }
+}

@@ -157,6 +157,7 @@ section {
   backdrop-filter: blur(6px);
 }
 .task-create-container {
+  min-width: 300px;
   width: min(70%, 850px);
   height: min(60%, 450px);
   background-color: white;
@@ -164,7 +165,6 @@ section {
 }
 .task-create-container section {
   margin: 1rem;
-  font-size: 1rem;
 }
 .task-create-container section textarea {
   resize: none;
@@ -177,7 +177,7 @@ section {
   margin-bottom: auto;
 }
 .task-create-container nav {
-  font-size: 1.4rem;
+  font-size: 2vw;
 }
 .task-create-container header {
   font-size: 2rem;
@@ -197,6 +197,9 @@ section {
   border: 1px solid var(--g);
   color: var(--g);
   border-radius: 4px;
+}
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .task-create-priorities label.low {
@@ -249,3 +252,7 @@ section {
   grid-template-columns: 15% 80%;
 }
 /* ****************************************************************************************** */
+.nav-active {
+  color: var(--g);
+  font-weight: 600;
+}
