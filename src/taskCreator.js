@@ -14,13 +14,19 @@ export const taskCreator = () => {
     "flex-align-center",
   ]).create();
   let span1 = DomElm("span", null, null, null, "Create New ...").create();
-  let span2 = DomElm("span", ["pointer"], null, null, "x").create();
+  let span2 = DomElm(
+    "span",
+    ["pointer", "close-task-creation"],
+    null,
+    null,
+    "x"
+  ).create();
   header.append(span1, span2);
   let nav = DomElm("nav").create();
   let ul1 = DomElm("ul").create();
   let li1_1 = DomElm(
     "li",
-    ["nav-active", "up_onhover", "small-padd"],
+    ["nav2-active", "up_onhover", "small-padd"],
     null,
     "ToDo"
   ).create();
@@ -39,7 +45,20 @@ export const taskCreator = () => {
     "space-btwn",
   ]).create();
 
+  content.append(header, nav, section);
+  container.append(content);
+
   const renderStructure = () => {
+    return container;
+  };
+  const toggleRendering = () => {
+    container.classList.toggle("display-none");
+  };
+
+  ////
+
+  const renderTodoStructure = () => {
+    section.innerHTML = "";
     let div_txt = DomElm("div", ["texts", "flex", "flex-column"]).create();
     let txtArea1 = DomElm("textarea", ["task-create-title"], {
       placeholder: "Title: Pay bills",
@@ -121,6 +140,7 @@ export const taskCreator = () => {
       null,
       "HIGH"
     ).create();
+
     taskCreatePriorities.append(
       DomElm("div", null, null, null, "Priority:").create(),
       lowPriority,
@@ -141,41 +161,116 @@ export const taskCreator = () => {
       "ADD TO DO"
     ).create();
     div_add.append(addTodoBtn);
-
     div.append(date_and_priority, div_add);
     section.append(div_txt, div);
-    content.append(header, nav, section);
-    container.append(content);
-    return container;
+
+    // add color effect to priorities when selected
+
+    lowPriorityLable.addEventListener("click", (e) => {
+      lowPriorityLable.classList.add("g-priority");
+      mediumPriorityLable.classList.remove("o-priority");
+      highPriorityLable.classList.remove("r-priority");
+    });
+    mediumPriorityLable.addEventListener("click", (e) => {
+      lowPriorityLable.classList.remove("g-priority");
+      mediumPriorityLable.classList.add("o-priority");
+      highPriorityLable.classList.remove("r-priority");
+    });
+    highPriorityLable.addEventListener("click", (e) => {
+      lowPriorityLable.classList.remove("g-priority");
+      mediumPriorityLable.classList.remove("o-priority");
+      highPriorityLable.classList.add("r-priority");
+    });
   };
 
-  const isHidden = () => container.classList.contains("display-none");
-  const toggleRendering = () => {
-    container.classList.toggle("display-none");
+  const renderNotesStructure = () => {
+    section.innerHTML = "";
+    let div_txt = DomElm("div", ["texts", "flex", "flex-column"]).create();
+    let txtArea1 = DomElm("textarea", ["note-item-title"], {
+      placeholder: "Note title",
+      name: "task-create-title",
+      maxlength: "40",
+      required: true,
+    }).create();
+    let txtArea2 = DomElm("textarea", ["note-item-text"], {
+      placeholder: "notes ...",
+      name: "task-create-details",
+    }).create();
+    div_txt.append(txtArea1, txtArea2);
+
+    let div = DomElm("div", ["flex", "space-btwn"]).create();
+
+    let div_add = DomElm("div", ["flex", "flex-center"]).create();
+    let addTodoBtn = DomElm(
+      "span",
+      ["add-to-do", "pointer", "green-btn", "small-padd"],
+      null,
+      null,
+      "ADD NOTE"
+    ).create();
+    div_add.append(addTodoBtn);
+    let temp = DomElm("div", ["flex", "flex-column"]).create();
+    div.append(temp, div_add);
+    section.append(div_txt, div);
   };
-  const closeListener = (e) => {
-    span2.addEventListener("click", (e) => {
-      toggleRendering();
-    });
+  const renderSectionStructure = () => {
+    section.innerHTML = "";
+    let div_txt = DomElm("div", ["texts", "flex", "flex-column"]).create();
+    let txtArea1 = DomElm("textarea", ["task-create-title"], {
+      placeholder: "Section name",
+      name: "task-create-title",
+      maxlength: "40",
+      required: true,
+    }).create();
+    div_txt.append(txtArea1);
+
+    let div = DomElm("div", ["flex", "space-btwn"]).create();
+
+    let div_add = DomElm("div", ["flex", "flex-center"]).create();
+    let addTodoBtn = DomElm(
+      "span",
+      ["add-to-do", "pointer", "green-btn", "small-padd"],
+      null,
+      null,
+      "ADD Section"
+    ).create();
+    div_add.append(addTodoBtn);
+
+    let temp = DomElm("div", ["flex", "flex-column"]).create();
+    div.append(temp, div_add);
+    section.append(div_txt, div);
   };
 
   let li_s = [li1_1, li1_2, li1_3];
   const navListener = (e) => {
-    let currentActive = document.querySelector(
-      ".task-create-container .nav-active"
-    );
+    let currentActive = document.querySelector(".nav2-active");
     if (li_s.includes(e.target)) {
       if (e.target != currentActive) {
-        e.target.classList.toggle("nav-active");
-        currentActive.classList.toggle("nav-active");
+        e.target.classList.toggle("nav2-active");
+        currentActive.classList.toggle("nav2-active");
+      }
+      if (e.target == li1_1) {
+        renderTodoStructure();
+      } else if (e.target == li1_2) {
+        renderSectionStructure();
+      } else if (e.target == li1_3) {
+        renderNotesStructure();
       }
     }
   };
+  renderTodoStructure();
+  const reset = () => {
+    renderTodoStructure();
+    li1_1.classList.add("nav2-active");
+    li1_2.classList.remove("nav2-active");
+    li1_3.classList.remove("nav2-active");
+    container.classList.add("display-none");
+  };
   return {
+    reset,
     renderStructure,
-    isHidden,
+    renderTodoStructure,
     toggleRendering,
-    closeListener,
     navListener,
   };
 };

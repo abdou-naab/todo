@@ -54,6 +54,7 @@ ul {
   padding: 1rem;
 }
 li {
+  position: relative;
   cursor: pointer;
   border-bottom: 1px solid var(--color-unique);
 }
@@ -172,7 +173,8 @@ section {
   border: none;
   border-bottom: 2px solid var(--grey);
 }
-.task-create-details {
+.task-create-details,
+.note-item-text {
   height: 6rem;
   margin-bottom: auto;
 }
@@ -190,8 +192,11 @@ section {
 .task-create-date div:first-child {
   padding-right: 1rem;
 }
+.task-create-priorities {
+  font-size: 1rem;
+}
 .date-and-priority input[type="radio"] {
-  opacity: 0;
+  visibility: hidden;
 }
 .green-btn {
   border: 1px solid var(--g);
@@ -202,35 +207,28 @@ section {
   flex-wrap: wrap;
 }
 
-.task-create-priorities label.low {
+label.low {
   border: 1px solid var(--g);
   color: var(--g);
   border-radius: 4px;
 }
-.task-create-priorities label.low:hover,
+
 .add-to-do:hover {
   background-color: var(--g);
   color: var(--white);
 }
-.task-create-priorities label.medium {
+label.medium {
   border: 1px solid var(--o);
   color: var(--o);
   border-radius: 4px;
 }
-.task-create-priorities label.medium:hover {
-  background-color: var(--o);
-  color: var(--white);
-}
-.task-create-priorities label.high {
+
+label.high {
   border: 1px solid var(--r);
   color: var(--r);
   border-radius: 4px;
 }
 
-.task-create-priorities label.high:hover {
-  background-color: var(--r);
-  color: var(--white);
-}
 /*  */
 .display-none {
   display: none;
@@ -252,7 +250,32 @@ section {
   grid-template-columns: 15% 80%;
 }
 /* ****************************************************************************************** */
-.nav-active {
+.nav-active,
+.nav2-active {
   color: var(--g);
   font-weight: 600;
+}
+/*  */
+.task-create-priorities .r-priority {
+  background-color: var(--r);
+  color: var(--white);
+}
+.task-create-priorities .g-priority {
+  background-color: var(--g);
+  color: var(--white);
+}
+.task-create-priorities .o-priority {
+  background-color: var(--o);
+  color: var(--white);
+}
+/* ****************************************************************************************** */
+.note_item {
+  background-color: var(--white);
+  border: 2px solid var(--grey);
+  box-shadow: 2px 2px 1px 3px var(--grey);
+  max-width: 35ch;
+  padding: 1rem 0;
+  min-width: 18ch;
+  max-height: 400px;
+  overflow: auto;
 }

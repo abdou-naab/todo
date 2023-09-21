@@ -1,14 +1,7 @@
-import { DomElm } from "./utils";
+import { DomElm, createTodoItem, createNoteItem } from "./utils";
 let otherSectionCount = 4;
 
-function renderEmptyContent(section) {
-  section.innerHTML(
-    DomElm("h2", null, null, null, "Well ...").create(),
-    DomElm("h5", null, null, null, "nothing to show here!").create()
-  );
-}
-
-export const home = (secionContent = undefined) => {
+export const home = () => {
   let content = DomElm("div", ["content", "grid"]).create();
   let header = DomElm(
     "header",
@@ -34,19 +27,19 @@ export const home = (secionContent = undefined) => {
   let li1_1 = DomElm(
     "li",
     ["nav-active", "up_onhover", "small-padd"],
-    { "data-home-nav-section": 0 },
+    { "data-nav-section": 0 },
     "Home"
   ).create();
   let li1_2 = DomElm(
     "li",
     ["up_onhover", "small-padd"],
-    { "data-home-nav-section": 1 },
+    { "data-nav-section": 1 },
     "Today"
   ).create();
   let li1_3 = DomElm(
     "li",
     ["up_onhover", "small-padd"],
-    { "data-home-nav-section": 2 },
+    { "data-nav-section": 2 },
     "Week"
   ).create();
   let li1_4 = DomElm(
@@ -59,7 +52,7 @@ export const home = (secionContent = undefined) => {
   let li1_5 = DomElm(
     "li",
     ["up_onhover", "small-padd"],
-    { "data-home-nav-section": 3 },
+    { "data-nav-section": 3 },
     "Notes"
   ).create();
   let addBtn = DomElm(
@@ -71,65 +64,41 @@ export const home = (secionContent = undefined) => {
   ul1.append(li1_1, li1_2, li1_3, li1_4, ul2, li1_5);
   nav.append(ul1, addBtn);
   content.append(header, nav, section);
-};
 
-/**
- * 
-  const renderStructure = () => {
+  const renderContent = (todos, todolist = true) => {
+    if (!todos.length) {
+      section.classList = "";
+      section.classList.add("flex", "flex-column", "flex-align-center");
+      section.innerHTML =
+        DomElm("h2", null, null, null, "Well ...").create().outerHTML +
+        DomElm("h5", null, null, null, "nothing to show here!").create()
+          .outerHTML;
+    } else {
+      section.innerHTML = "";
+      todos.forEach((i) => {
+        if (todolist) {
+          section.classList = "";
+          section.classList.add("flex", "flex-column", "flex-align-center");
+          section.append(createTodoItem(i).todoItem);
+        } else {
+          section.classList = "";
+          section.classList.add("flex", "flex-wrap", "small-padd");
+          section.append(createNoteItem(i).noteItem);
+        }
+      });
+    }
     return content;
   };
-  const addSection = (sectionName) => {
-    let tempLi = DomElm(
+  const addSubSection = (name, number) => {
+    let li = DomElm(
       "li",
       ["up_onhover", "small-padd"],
-      { "data-home-nav-section": otherSectionCount },
-      null,
-      sectionName
+      { "data-nav-section": number },
+      name
     ).create();
-    sectionsContent[otherSectionCount] = undefined;
-    tempLi.style.border = "none";
-    otherSectionCount++;
-    ul2.append(tempLi);
+    ul2.append(li);
+    return content;
   };
-  const addTaskListener = (taskCreatorSection) => {
-    taskCreatorSection.closeListener();
-    addBtn.addEventListener("click", taskCreatorSection.toggleRendering);
-  };
-  const addOtherSection = (str) => {
-    let temp_li = DomElm(
-      "li",
-      ["up_onhover", "small-padd"],
-      null,
-      str
-    ).create();
-    ul2.append(temp_li);
-  };
-  const navListener = (e) => {
-    let nav_li_elements = [...[...ul1.children], ...[...ul2.children]];
-    delete nav_li_elements[3];
-    let currentActive = document.querySelector(".home-nav .nav-active");
 
-    if (nav_li_elements.includes(e.target)) {
-      if (e.target != currentActive) {
-        e.target.classList.toggle("nav-active");
-        currentActive.classList.toggle("nav-active");
-      }
-    }
-
-    let currentSection = otherSectionCount[e.target.dataset.homeNavSection];
-    if (!currentSection && section.children.length < 1) {
-      emptySection();
-    } else if (currentSection) {
-      for (let i of currentSection) {
-        section.append(i);
-      }
-    }
-  };
-  return {
-    renderStructure,
-    addSection,
-    addTaskListener,
-    navListener,
-    addOtherSection,
-  };
- */
+  return { renderContent, addSubSection };
+};
