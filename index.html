@@ -6,48 +6,18 @@
     <title>ToDo</title>
   </head>
   <body class="grid">
-    <header>&#128393; DO</header>
-    <nav>
-      <ul class="folders flex-column flex-center">
-        <li>home</li>
-        <li>today</li>
-        <li>week</li>
-        <ul></ul>
-        <li>notes</li>
+    <header class="main">&#128393; DO</header>
+    <nav class="main">
+      <ul class="folders">
+        <li class="nav_active" data-name="home">home</li>
+        <li data-name="today">today</li>
+        <li data-name="week">week</li>
+        <ul class="sub-sections"></ul>
+        <li data-name="notes">notes</li>
       </ul>
-      <p class="add_utilities flex-row flex-center">+</p>
+      <p class="cursor add_utilities flex-row flex-center">+</p>
     </nav>
-    <section class="todo-section">
-      <div class="todo-item">
-        <input class="cursor" type="checkbox" id="state" name="state" />
-        <span name="title"> title</span>
-        <span></span>
-        <button class="btn_green_borders cursor" name="details">DETAILS</button>
-        <span name="due-date">23-04-3038</span>
-        <img
-          class="cursor"
-          src="../src/images/edit-button.png"
-          alt="editing pen"
-          name="edit"
-        />
-        <img
-          class="cursor"
-          src="../src/images/trash-can.svg"
-          alt="trash can"
-          name="remove"
-        />
-      </div>
-    </section>
-    <section class="note-section hide">
-      <ul>
-        <li>
-          <a href="#" contenteditable>
-            <h2>Title #1</h2>
-            <p>Text Content #1</p>
-          </a>
-        </li>
-      </ul>
-    </section>
+    <section class="main"></section>
 
     <!-- POPUP PANELS -->
     <div class="blured-fixed-bg flex-row flex-center hide">
@@ -55,116 +25,28 @@
       <div class="creation-panel grid hide">
         <header>
           <span>Create Item</span>
-          <span class="cursor" style="font-size: 2rem; font-weight: bolder"
+          <span
+            class="close_it cursor"
+            style="font-size: 2rem; font-weight: bolder"
             >x</span
           >
         </header>
         <nav>
           <ul class="folders flex-column flex-center">
-            <li>Todo</li>
-            <li>Section</li>
-            <li>Note</li>
+            <li data-name="todo" class="nav_active">Todo</li>
+            <li data-name="section">Section</li>
+            <li data-name="note">Note</li>
           </ul>
         </nav>
-        <section>
-          <form id="new-todo-form" class="hide">
-            <div class="text-areas flex-column">
-              <textarea
-                placeholder="Title: read book"
-                name="item_title"
-                maxlength="20"
-                required
-              ></textarea>
-              <textarea
-                name="item_description"
-                placeholder="Details: basa'ir book by dr. haitham talaat"
-                rows="8"
-                maxlength="600"
-              ></textarea>
-            </div>
-
-            <div class="bottom-content">
-              <div class="date-and-prios">
-                <div class="due-date">
-                  <span>Due Date:</span>
-                  <input type="date" name="due_date" required />
-                </div>
-                <div class="priorities">
-                  <span>Priority:</span>
-                  <label for="low-priority">Low</label>
-                  <input
-                    type="radio"
-                    id="low-priority"
-                    name="priority"
-                    required
-                  />
-                  <label for="medium-priority">Medium</label>
-                  <input
-                    type="radio"
-                    id="medium-priority"
-                    name="priority"
-                    required
-                  />
-                  <label for="high-priority">High</label>
-                  <input
-                    type="radio"
-                    id="high-priority"
-                    name="priority"
-                    required
-                  />
-                </div>
-              </div>
-
-              <button class="btn_green_borders cursor" type="submit">
-                Add Todo
-              </button>
-            </div>
-          </form>
-
-          <form id="new-section-form" class="hide">
-            <textarea
-              placeholder="Name: new section"
-              name="item_title"
-              maxlength="20"
-              required
-            ></textarea>
-            <div class="bottom-content">
-              <div class="date-and-prios"></div>
-              <button class="btn_green_borders cursor" type="submit">
-                Add Section
-              </button>
-            </div>
-          </form>
-
-          <form id="new-note-form" class="hide">
-            <div class="text-areas flex-column">
-              <textarea
-                placeholder="Name: new note"
-                name="item_title"
-                maxlength="20"
-                required
-              ></textarea>
-              <textarea
-                name="item_description"
-                placeholder="Details: details of my new note"
-                rows="8"
-                maxlength="600"
-              ></textarea>
-            </div>
-            <div class="bottom-content">
-              <div class="date-and-prios"></div>
-              <button class="btn_green_borders cursor" type="submit">
-                Add Section
-              </button>
-            </div>
-          </form>
-        </section>
+        <section></section>
       </div>
       <!--  SHOW DETAILS -->
       <div class="details-panel grid2 hide">
         <header>
           <span class="title"></span>
-          <span class="cursor" style="font-size: 2rem; font-weight: bolder"
+          <span
+            class="cursor close_details"
+            style="font-size: 2rem; font-weight: bolder"
             >x</span
           >
         </header>
@@ -184,12 +66,14 @@
       <div class="update-panel hide">
         <header>
           <span>Update Item</span>
-          <span class="cursor" style="font-size: 2rem; font-weight: bolder"
+          <span
+            class="cursor close_update"
+            style="font-size: 2rem; font-weight: bolder"
             >x</span
           >
         </header>
         <section>
-          <form id="update-todo-form" class="">
+          <form>
             <div class="text-areas flex-column">
               <textarea
                 placeholder="Title: read book"
