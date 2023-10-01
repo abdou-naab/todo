@@ -178,6 +178,7 @@ export const Data = (() => {
     }
     return temp;
   };
+
   const getTodos = (s = "home") => {
     return todos[s];
   };
@@ -298,6 +299,155 @@ export const ItemsManager = (() => {
   return { createTodoElement, createNoteElement };
 })();
 
+export const UpdatePanel = (() => {
+  const todo = (id, hideFunc) => {
+    const todoElm = Data.getTodoItem(id);
+    const form = document.createElement("form");
+
+    const textAreas = document.createElement("div");
+    textAreas.classList.add("flex-column");
+    const title = document.createElement("textarea");
+    title.setAttribute("placeholder", "Title: read book");
+    title.setAttribute("name", "item_title");
+    title.setAttribute("maxlength", "20");
+    title.setAttribute("required", "");
+    title.textContent = todoElm.title;
+    const description = document.createElement("textarea");
+    description.setAttribute(
+      "placeholder",
+      "Details: basa'ir book by dr. haitham talaat"
+    );
+    description.setAttribute("name", "item_description");
+    description.setAttribute("rows", "8");
+    description.setAttribute("maxlength", "600");
+    description.value = todoElm.details;
+    textAreas.append(title, description);
+
+    const bottomContent = document.createElement("div");
+    bottomContent.classList.add("bottom-content");
+    const date_and_prios = document.createElement("div");
+    date_and_prios.classList.add("date-and-prios");
+
+    const dueDate = document.createElement("div");
+    dueDate.classList.add("due-date");
+    const span1 = document.createElement("span");
+    span1.textContent = "Due Date:";
+    const dateInput = document.createElement("input");
+    dateInput.setAttribute("type", "date");
+    dateInput.setAttribute("name", "date_date");
+    dateInput.setAttribute("required", "");
+    dateInput.value = new Date(todoElm.dueDate).toISOString().split("T")[0];
+    dueDate.append(span1, dateInput);
+
+    const priorities = document.createElement("div");
+    const span2 = document.createElement("span");
+    span2.textContent = "Priority:";
+
+    const lowLabel = document.createElement("label");
+    lowLabel.textContent = "Low";
+    lowLabel.setAttribute("for", "low-priority");
+    const lowInput = document.createElement("input");
+    lowInput.setAttribute("type", "radio");
+    lowInput.setAttribute("id", "low-priority");
+    lowInput.setAttribute("name", "priority");
+    lowInput.setAttribute("data-n", "0");
+    lowInput.setAttribute("required", "");
+
+    const mediumLabel = document.createElement("label");
+    mediumLabel.textContent = "Medium";
+    mediumLabel.setAttribute("for", "medium-priority");
+    const mediumInput = document.createElement("input");
+    mediumInput.setAttribute("type", "radio");
+    mediumInput.setAttribute("id", "medium-priority");
+    mediumInput.setAttribute("name", "priority");
+    mediumInput.setAttribute("data-n", "1");
+    mediumInput.setAttribute("required", "");
+
+    const highLabel = document.createElement("label");
+    highLabel.textContent = "High";
+    highLabel.setAttribute("for", "high-priority");
+    const highInput = document.createElement("input");
+    highInput.setAttribute("type", "radio");
+    highInput.setAttribute("id", "high-priority");
+    highInput.setAttribute("name", "priority");
+    highInput.setAttribute("data-n", "2");
+    highInput.setAttribute("required", "");
+
+    if (todoElm.priority == 0) {
+      lowInput.checked = true;
+      lowLabel.classList.add("priority_0");
+    } else if (todoElm.priority == 1) {
+      mediumInput.checked = true;
+      mediumLabel.classList.add("priority_1");
+    } else {
+      highInput.checked = true;
+      highLabel.classList.add("priority_2");
+    }
+    priorities.append(
+      span2,
+      lowInput,
+      lowLabel,
+      mediumInput,
+      mediumLabel,
+      highInput,
+      highLabel
+    );
+    date_and_prios.append(dueDate, priorities);
+
+    const button = document.createElement("button");
+    button.classList.add("btn_green_borders", "cursor");
+    button.setAttribute("type", "submit");
+    button.textContent = "Update Todo";
+
+    bottomContent.append(date_and_prios, button);
+    form.append(textAreas, bottomContent);
+
+    // priotity color
+    const priorColor = (radio, label) => {
+      const n2label = {
+        0: lowLabel,
+        1: mediumLabel,
+        2: highLabel,
+      };
+
+      radio.addEventListener("click", (event) => {
+        if (event.target.checked) {
+          label.classList.add(`priority_${event.target.dataset.n}`);
+          [0, 1, 2]
+            .filter((n) => n != event.target.dataset.n)
+            .forEach((n) => {
+              n2label[n].classList.remove(`priority_${n}`);
+            });
+        }
+      });
+    };
+    priorColor(lowInput, lowLabel);
+    priorColor(mediumInput, mediumLabel);
+    priorColor(highInput, highLabel);
+    // do the listener directly here
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (form.reportValidity()) {
+        const obj = new Todo(
+          title.value,
+          todoElm.state,
+          description.value,
+          toDate(dateInput.value),
+          [lowInput, mediumInput, highInput].findIndex((r) => r.checked),
+          todoElm.id
+        );
+        Data.updateTodo(obj);
+        hideFunc();
+        showMainNavSectionContent(qs(" nav.main .nav_active"));
+      }
+    });
+    return form;
+  };
+  const note = (title, text, id) => {
+    Data.updateNote(new Note(title, text, id));
+  };
+  return { todo, note };
+})();
 export const CreationPanel = (() => {
   const section = (() => {
     const form = document.createElement("form");

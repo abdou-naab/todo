@@ -249,38 +249,44 @@ li {
   width: 100vw;
   backdrop-filter: blur(6px);
 }
-.creation-panel {
+.creation-panel,
+.update-panel {
   width: clamp(400px, 700px, 70vw);
   height: clamp(250px, 410px, 55vh);
   background-color: var(--white);
   border: 3px solid var(--dalla3);
   border-radius: 4px;
 }
-.creation-panel header {
+.creation-panel header,
+.update-panel header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.creation-panel section {
+.creation-panel section,
+.update-panel section {
   display: flex;
   font-size: min (1.1rem, var(--font-x2));
-  height: 100%;
+  height: max-content;
   padding: 1rem;
 }
 
-.creation-panel form {
+.creation-panel form,
+.update-panel form {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 2.1rem, 3.5rem);
+  gap: clamp(8px, 2.5rem, 3.5rem);
 }
-.creation-panel .bottom-content {
+.creation-panel .bottom-content,
+.update-panel .bottom-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.creation-panel form textarea {
+.creation-panel form textarea,
+.update-panel form textarea {
   padding-left: 8px;
   resize: none;
   outline: none;
@@ -288,10 +294,12 @@ li {
   border-bottom: 2px solid var(--shadow);
   border-radius: 4px;
 }
-.creation-panel form input[type="date"] {
+.creation-panel form input[type="date"],
+.update-panel form input[type="date"] {
   color: var(--g);
 }
-.creation-panel label[for="low-priority"] {
+.creation-panel label[for="low-priority"],
+.update-panel label[for="low-priority"] {
   margin-right: 8px;
   border: 1px solid var(--g);
   color: var(--g);
@@ -300,7 +308,8 @@ li {
   cursor: pointer;
   height: fit-content;
 }
-.creation-panel label[for="medium-priority"] {
+.creation-panel label[for="medium-priority"],
+.update-panel label[for="medium-priority"] {
   margin-right: 8px;
 
   border: 1px solid var(--o);
@@ -309,7 +318,8 @@ li {
   padding: 4px 8px;
   cursor: pointer;
 }
-.creation-panel label[for="high-priority"] {
+.creation-panel label[for="high-priority"],
+.update-panel label[for="high-priority"] {
   margin-right: 8px;
 
   border: 1px solid var(--r);
@@ -318,37 +328,45 @@ li {
   padding: 2px 8px;
   cursor: pointer;
 }
-.creation-panel input[type="radio"] {
+.creation-panel input[type="radio"],
+.update-panel input[type="radio"] {
   position: relative;
   left: 2rem;
   width: 1px;
   height: 1px;
 }
-.creation-panel form div span {
+.creation-panel form div span,
+.update-panel form div span {
   display: inline-block;
   width: 80px;
 }
-.creation-panel .date-and-prios {
+.creation-panel .date-and-prios,
+.update-panel .date-and-prios {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
 }
-.creation-panel .date-and-prios div {
+.creation-panel .date-and-prios div,
+.update-panel .date-and-prios div {
   display: flex;
   align-items: center;
 }
-.creation-panel .bottom-content button {
+.creation-panel .bottom-content button,
+.update-panel .bottom-content button {
   align-self: flex-end;
 }
-.creation-panel .bottom-content .priority_0 {
+.creation-panel .bottom-content .priority_0,
+.update-panel .bottom-content .priority_0 {
   color: var(--white);
   background-color: var(--g);
 }
-.creation-panel .bottom-content .priority_1 {
+.creation-panel .bottom-content .priority_1,
+.update-panel .bottom-content .priority_1 {
   color: var(--white);
   background-color: var(--o);
 }
-.creation-panel .bottom-content .priority_2 {
+.creation-panel .bottom-content .priority_2,
+.update-panel .bottom-content .priority_2 {
   color: var(--white);
   background-color: var(--r);
 }

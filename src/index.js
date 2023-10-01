@@ -1,12 +1,12 @@
 import "./style.css";
-import { CreationPanel as CP, Data } from "./logic";
+import { CreationPanel as CP, Data, UpdatePanel as UP } from "./logic";
 import { ItemsManager } from "./logic";
 const qs = (i) => document.querySelector(i);
 const qsa = (i) => document.querySelectorAll(i);
 let addUtilities = qs(".add_utilities");
 let creationPanel = qs(".creation-panel");
 let detailsPanel = qs(".details-panel");
-
+let updatePanel = qs(".update-panel");
 const CreateItemPopUp = (panel = creationPanel) => {
   let bluredBg = qs(".blured-fixed-bg");
   let renderDefault = () => {
@@ -149,14 +149,49 @@ function itemDetailslistener(panel = detailsPanel) {
     });
   });
 }
-function itemEditListener(panel = creationPanel) {
-  const updateBtns = qsa("body > section.main img[name = 'edit']");
-  updateBtns.forEach((db) => {
-    db.addEventListener("click", (e) => {
-      const id = e.target.parentElement.dataset.id;
-      // do stuff ...
+const UpdateItemPopUp = (s = "todo", id = undefined, panel = updatePanel) => {
+  let bluredBg = qs(".blured-fixed-bg");
+
+  let hide = () => {
+    bluredBg.classList.add("hide");
+    panel.classList.add("hide");
+  };
+  let render = () => {
+    const form = UP[s](id, hide);
+    bluredBg.classList.remove("hide");
+    panel.classList.remove("hide");
+    panel.children[panel.children.length - 1].innerHTML = "";
+    panel.children[panel.children.length - 1].append(form);
+    qs(".close_update").addEventListener("click", () => {
+      bluredBg.classList.add("hide");
+      panel.classList.add("hide");
     });
-  });
+  };
+
+  return { render, hide };
+};
+function itemEditListener(s = "todo") {
+  if (s == "todo") {
+    const updateBtns = qsa("body > section.main img[name = 'edit']");
+    updateBtns.forEach((db) => {
+      db.addEventListener("click", (e) => {
+        const id = e.target.parentElement.dataset.id;
+        let updatePopUp = UpdateItemPopUp("todo", id);
+        updatePopUp.render();
+      });
+    });
+  } else if (s == "note") {
+    const notes = qsa(" body .note-section li a ");
+    notes.forEach((n) => {
+      n.addEventListener("keyup", (e) => {
+        UP.note(
+          e.target.children[0].textContent,
+          e.target.children[1].textContent,
+          e.target.parentElement.dataset.id
+        );
+      });
+    });
+  }
 }
 // main nav listener
 export function showMainNavSectionContent(li) {
@@ -174,6 +209,7 @@ export function showMainNavSectionContent(li) {
   } else {
     addNotesElms2MainSection();
     deleteNoteListener();
+    itemEditListener("note");
   }
 }
 
