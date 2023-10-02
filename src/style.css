@@ -278,10 +278,11 @@ ul.folders ul.sub-sections {
 .creation-panel,
 .update-panel {
   width: clamp(400px, 700px, 70vw);
-  height: clamp(250px, 410px, 55vh);
+  height: clamp(250px, 430px, 55vh);
   background-color: var(--white);
   border: 3px solid var(--dalla3);
   border-radius: 4px;
+  overflow-y: auto;
 }
 .creation-panel header,
 .update-panel header {
@@ -303,7 +304,7 @@ ul.folders ul.sub-sections {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 2.5rem, 3.5rem);
+  gap: clamp(8px, 2.3rem, 3.5rem);
 }
 .creation-panel .bottom-content,
 .update-panel .bottom-content {
