@@ -77,8 +77,24 @@ ul.folders {
   padding-left: 1rem;
   padding-bottom: 50px;
 }
-ul.folders li {
+nav ul li {
   cursor: pointer;
+  position: relative;
+}
+span.todos-undone {
+  width: calc(var(--font-x2) + 2px);
+  height: calc(var(--font-x2) + 2px);
+  border-radius: 50%;
+  background-color: var(--dalla3);
+  color: var(--white);
+  position: absolute;
+  right: 10px;
+  top: auto;
+  bottom: auto;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 ul.folders ul.sub-sections {
   list-style: none;
@@ -156,6 +172,9 @@ ul.folders ul.sub-sections {
   width: var(--font-x);
   accent-color: var(--g);
 }
+.todo-item *[name="details"] {
+  margin-right: 4px;
+}
 .todo-item img {
   height: var(--font-x);
   width: var(--font-x);
@@ -185,7 +204,7 @@ ul.folders ul.sub-sections {
   font-family: "hand writing";
 }
 .note-section ul,
-li {
+.note-section li {
   width: fit-content;
   list-style: none;
 }
@@ -375,7 +394,7 @@ li {
 
 .grid2 {
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 26% 74%;
 }
 .details-panel {
   width: clamp(350px, 60vw, 900px);

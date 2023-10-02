@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { showMainNavSectionContent } from ".";
+import { showMainNavSectionContent, displayUnfinishedTasksNum } from ".";
 import removeImg from "../src/images/trash-can.svg";
 import editImg from "../src/images/edit-button.png";
 const qs = (i) => document.querySelector(i);
@@ -185,6 +185,24 @@ export const Data = (() => {
   const getNotes = () => {
     return notes;
   };
+  const getSubSections = () => {
+    let temp = [];
+    for (let key of Object.keys(todos)) {
+      if (key != "home" && key != "today" && key != "week") {
+        temp.push(key);
+      }
+    }
+    return temp;
+  };
+  const getStats = (section) => {
+    let temp = 0;
+    for (let i = 0; i < todos[section].length; i++) {
+      if (!todos[section][i].state) {
+        temp++;
+      }
+    }
+    return temp;
+  };
   const SubSections = (() => {
     const ul = qs("nav.main .folders .sub-sections");
 
@@ -194,14 +212,27 @@ export const Data = (() => {
         return;
       }
       if (name) {
+        let exists = todos.hasOwnProperty(name);
         let s = document.createElement("li");
         s.textContent = name;
         s.dataset.name = name;
-        todos[`${name}`] = [];
-        addListenerToMainNavSections(s);
-        showMainNavSectionContent(s);
+        if (!exists) {
+          todos[`${name}`] = [];
+        }
+        // addListenerToMainNavSections(s);
+        s.classList.add("flex-row");
+        let span = document.createElement("span");
+        span.classList.add("todos-undone");
+        s.appendChild(span);
+        s.addEventListener("click", () => {
+          showMainNavSectionContent(s);
+        });
+        if (!exists) {
+          showMainNavSectionContent(s);
+        }
+        displayUnfinishedTasksNum(s);
         ul.appendChild(s);
-        console.log(todos);
+        saveLists({ todos });
       }
     };
     const remove = (name) => {
@@ -210,6 +241,7 @@ export const Data = (() => {
         if (li.dataset.name == name) {
           li.remove();
           delete todos[`${name}`];
+          saveLists({ todos });
           break;
         }
       }
@@ -217,6 +249,8 @@ export const Data = (() => {
     return { add, remove };
   })();
   return {
+    getStats,
+    getSubSections,
     getTodoItem,
     updateTodoState,
     SubSections,

@@ -66,6 +66,10 @@ export function addTodosElms2MainSection(section = "home") {
     data.forEach((i) => {
       main.append(ItemsManager.createTodoElement(i));
     });
+    let mainNavLis = qsa("nav.main ul li");
+    for (let li of mainNavLis) {
+      displayUnfinishedTasksNum(li);
+    }
   }
 }
 // show notes
@@ -84,6 +88,7 @@ export function addNotesElms2MainSection() {
   }
   main.append(ul);
 }
+
 // states listener
 function stateListener() {
   let stateCheckBoxes = qsa("body > section.main input[name = 'state']");
@@ -92,6 +97,10 @@ function stateListener() {
       const id = e.target.parentElement.dataset.id;
       const bool = e.target.checked;
       Data.updateTodoState(id, bool);
+      let mainNavLis = qsa("nav.main ul li");
+      for (let li of mainNavLis) {
+        displayUnfinishedTasksNum(li);
+      }
     });
   });
 }
@@ -102,6 +111,11 @@ function deleteTodoListener() {
       const id = e.target.parentElement.dataset.id;
       e.target.parentElement.remove();
       Data.removeTodo(id);
+      let mainNavLis = qsa("nav.main ul li");
+      for (let li of mainNavLis) {
+        displayUnfinishedTasksNum(li);
+      }
+      displayWhenEmpty();
     });
   });
 }
@@ -213,20 +227,70 @@ export function showMainNavSectionContent(li) {
   }
 }
 
+function addSubsections2MainNav() {
+  for (let key of Data.getSubSections()) {
+    Data.SubSections.add(key);
+  }
+}
+function displayWhenEmpty() {
+  let section = qs("section.main");
+  let activeNav = qs("nav.main .nav_active");
+  let sectionName = activeNav.dataset.name;
+
+  if (section.children.length == 0) {
+    let h2 = document.createElement("h2");
+    h2.textContent = "no todos to do!";
+    let btn = document.createElement("button");
+    btn.classList.add("btn_green_borders");
+    btn.textContent = "Remove Section";
+    section.append(h2);
+    if (!["home", "notes", "week", "today"].includes(sectionName)) {
+      section.append(btn);
+      btn.addEventListener("click", () => {
+        showMainNavSectionContent(qs('nav.main li[data-name = "home"]'));
+        Data.SubSections.remove(sectionName);
+      });
+    }
+  }
+}
+export function displayUnfinishedTasksNum(li) {
+  let n;
+  if (li.dataset.name != "notes") {
+    n = Data.getStats(li.dataset.name);
+  }
+
+  if (n && n != 0) {
+    if (li.children.length) {
+      li.children[0].textContent = n;
+    } else {
+      let span = document.createElement("span");
+      span.classList.add("todos-undone");
+      span.textContent = n;
+      li.append(span);
+    }
+  } else {
+    if (li.children.length) {
+      li.children[0].remove();
+    }
+  }
+}
 /*            Main             */
 const Main = () => {
-  let mainNavLis = qsa("nav.main ul li");
+  addSubsections2MainNav();
   addTodosElms2MainSection();
   stateListener();
   deleteTodoListener();
   itemDetailslistener();
   itemEditListener();
+
+  displayWhenEmpty();
+  let mainNavLis = qsa("nav.main ul li");
   for (let li of mainNavLis) {
-    // the folowwing are applied to the original,
-    // you need to call 'em also on the new instances ...
     li.addEventListener("click", () => {
       showMainNavSectionContent(li);
+      displayWhenEmpty();
     });
+    displayUnfinishedTasksNum(li);
   }
 
   let creationPopUP = CreateItemPopUp();
