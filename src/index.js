@@ -126,6 +126,7 @@ function deleteNoteListener() {
       const id = e.target.parentElement.parentElement.dataset.id;
       e.target.parentElement.parentElement.remove();
       Data.removeNote(id);
+      displayWhenEmpty();
     });
   });
 }
@@ -236,8 +237,14 @@ function displayWhenEmpty() {
   let section = qs("section.main");
   let activeNav = qs("nav.main .nav_active");
   let sectionName = activeNav.dataset.name;
+  let condition;
+  if (sectionName == "notes") {
+    condition = section.children[0].children.length == 0;
+  } else {
+    condition = section.children.length == 0;
+  }
 
-  if (section.children.length == 0) {
+  if (condition) {
     let h2 = document.createElement("h2");
     h2.textContent = "no todos to do!";
     let btn = document.createElement("button");

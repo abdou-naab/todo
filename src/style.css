@@ -188,6 +188,13 @@ ul.folders ul.sub-sections {
 .note-section {
   padding: 3rem 0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.note-section h2,
+.note-section button {
+  position: absolute;
+  align-self: center;
 }
 .note-section * {
   margin: 0;
