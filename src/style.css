@@ -191,8 +191,8 @@ ul.folders ul.sub-sections {
   display: flex;
   flex-direction: column;
 }
-.note-section h2,
-.note-section button {
+.note-section > h2,
+.note-section > button {
   position: absolute;
   align-self: center;
 }
