@@ -163,6 +163,7 @@ ul.folders ul.sub-sections {
   padding: 0.6rem 0;
   border-radius: 6px;
 }
+
 .todo-item:hover {
   box-shadow: 3px 3px 5px 1px var(--shadow);
   transform: translateX(3px) translateY(-3px);
@@ -377,8 +378,8 @@ ul.folders ul.sub-sections {
   flex-direction: column;
   gap: 1.8rem;
 }
-.creation-panel .date-and-prios div,
-.update-panel .date-and-prios div {
+.creation-panel .date-and-prios > div,
+.update-panel .date-and-prios > div {
   display: flex;
   align-items: center;
 }
@@ -427,4 +428,27 @@ ul.folders ul.sub-sections {
 }
 .details-panel span {
   padding-left: 8px;
+}
+
+@media (max-width: 450px) {
+  .todo-item {
+    grid-template-columns: 0.5fr 1.5fr 1% 1fr 2fr 0.5fr 0.5fr;
+  }
+  .creation-panel .date-and-prios,
+  .update-panel .date-and-prios {
+    gap: 4px !important;
+  }
+  .date-and-prios > div {
+    flex-direction: column;
+  }
+  .creation-panel .bottom-content,
+  .update-panel .bottom-content {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+@media (max-width: 330px) {
+  .todo-item {
+    grid-template-columns: repeat(auto-fit, minmax(46px, 1fr));
+  }
 }

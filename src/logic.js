@@ -587,8 +587,8 @@ export const CreationPanel = (() => {
     highInput.setAttribute("data-n", "2");
     highInput.setAttribute("required", "");
 
-    priorities.append(
-      span2,
+    const tempPrioDiv = document.createElement("div");
+    tempPrioDiv.append(
       lowInput,
       lowLabel,
       mediumInput,
@@ -596,6 +596,7 @@ export const CreationPanel = (() => {
       highInput,
       highLabel
     );
+    priorities.append(span2, tempPrioDiv);
     date_and_prios.append(dueDate, priorities);
 
     const button = document.createElement("button");
