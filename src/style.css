@@ -434,17 +434,34 @@ ul.folders ul.sub-sections {
   .todo-item {
     grid-template-columns: 0.5fr 1.5fr 1% 1fr 2fr 0.5fr 0.5fr;
   }
-  .creation-panel .date-and-prios,
-  .update-panel .date-and-prios {
-    gap: 4px !important;
+  .update-panel header {
+    font-size: 1.8rem !important;
   }
-  .date-and-prios > div {
-    flex-direction: column;
-  }
-  .creation-panel .bottom-content,
   .update-panel .bottom-content {
     flex-direction: column;
-    gap: 4px;
+  }
+  .creation-panel .date-and-prios {
+    gap: 0.8rem;
+  }
+  .creation-panel .date-and-prios > div {
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+  .update-panel .bottom-content,
+  .creation-panel .bottom-content {
+    align-items: start;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .creation-panel,
+  .update-panel {
+    height: min(450px, 60vh);
+  }
+  .update-panel form,
+  .creation-panel form {
+    justify-content: flex-start;
+    gap: 24px;
   }
 }
 @media (max-width: 330px) {
